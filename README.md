@@ -47,7 +47,7 @@ yarn add vite-plugin-tailwind-legacy --dev
 ```javascript
 import { defineConfig } from 'vite'
 import tailwindcss from '@tailwindcss/vite'
-import TailwindLegacyPlugin from '@vite-plugin-tailwind-legacy'; 
+import TailwindLegacyPlugin from 'vite-plugin-tailwind-legacy'; 
 
 
 
