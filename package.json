@@ -1,0 +1,45 @@
+{
+  "name": "vite-plugin-tailwind-legacy",
+  "version": "1.0.4",
+  "main": "vite-plugin-tailwind-legacy.js",
+  "types": "./vite-plugin-tailwind-legacy.d.ts",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "vite",
+    "plugin",
+    "tailwindcss",
+    "tailwindv4",
+    "legacy",
+    "compatibility"
+  ],
+  "files": [
+    "vite-plugin-tailwind-legacy.js",
+    "vite-plugin-tailwind-legacy.d.ts"
+  ],
+  "author": {
+    "name": "sapiyans",
+    "url": "https://sapiensin.com"
+  },
+  "description": "Plugin Vite para gerar CSS Tailwind v4 compatível com navegadores antigos, utilizando tailwind v3",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sapiyans/vite-plugin-tailwind-legacy.git"
+  },
+  "homepage": "https://github.com/sapiyans/vite-plugin-tailwind-legacy#readme",
+  "bugs": {
+    "url": "https://github.com/sapiyans/vite-plugin-tailwind-legacy/issues"
+  },
+  "exports": {
+    ".": {
+      "types": "./vite-plugin-tailwind-legacy.d.ts",
+      "import": "./vite-plugin-tailwind-legacy.js"
+    }
+  },
+  "devDependencies": {
+    "vite-plugin-tailwind-legacy": "^1.0.3"
+  }
+}
