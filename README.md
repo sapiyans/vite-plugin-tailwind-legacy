@@ -349,17 +349,17 @@ graph TD
 Shadcn https://ui.shadcn.com/docs/components/avatar
 <div style="display: flex; flex-direction: column; gap: 16px;">
   <div style="display: flex; gap: 16px;">
-    <img style="width: 48%; object-fit: contain;" src="exemplo/images/shadcn_antes.png" alt="antes" />
-    <img style="width: 48%; object-fit: contain;" src="exemplo/images/shadcn_depois.png" alt="depois" />
+    <img style="width: 48%; object-fit: contain;" src="https://raw.githubusercontent.com/sapiyans/vite-plugin-tailwind-legacy/refs/heads/main/exemplo/images/shadcn_antes.png" alt="antes" />
+    <img style="width: 48%; object-fit: contain;" src="https://raw.githubusercontent.com/sapiyans/vite-plugin-tailwind-legacy/refs/heads/main/exemplo/images/shadcn_depois.png" alt="depois" />
   </div>
-  <img style="width: 100%;" alt="gif demonstrativo" src="exemplo/images/shadcn_gif.gif" />
+  <img style="width: 100%;" alt="gif demonstrativo" src="https://raw.githubusercontent.com/sapiyans/vite-plugin-tailwind-legacy/refs/heads/main/exemplo/images/shadcn_gif.gif" />
 </div>
 
 ## Sites que estão em desenvolvimento com tailwind v4 =>
 
 Antes e depois do plugin Chrome 85.0.4183.102 pelo celular
 <div style="display: flex; gap: 16px;">
-  <img style="width: 48%; object-fit: contain;" alt="antes" src="exemplo/images/clinica_antes.png" />
-  <img style="width: 48%; object-fit: contain;" alt="Depois" src="exemplo/images/clinica_depois.png" />
+  <img style="width: 48%; object-fit: contain;" alt="antes" src="https://raw.githubusercontent.com/sapiyans/vite-plugin-tailwind-legacy/refs/heads/main/exemplo/images/clinica_antes.png" />
+  <img style="width: 48%; object-fit: contain;" alt="Depois" src="https://raw.githubusercontent.com/sapiyans/vite-plugin-tailwind-legacy/refs/heads/main/exemplo/images/clinica_depois.png" />
 </div>
 
