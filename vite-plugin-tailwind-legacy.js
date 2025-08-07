@@ -7,7 +7,8 @@ import { execSync } from "child_process";
  *  tailwindConfig?: string;
  *  inputCSS?: string;
  *  assetsDir?: string;
- *  publicPath?: string; // para uso no HTML (ex: "/static/assets/")
+ *  publicPath?: string; // for use in HTML (e.g.: "/static/assets/")
+ *  buildDir?: string; // build output directory to scan for HTML files
  *  injectInHTML = boolean;
  * }} options
  */
@@ -17,6 +18,7 @@ export default function TailwindLegacyPlugin(options = {}) {
     inputCSS = "input.css",
     assetsDir = "dist/assets",
     publicPath = "/static/assets/",
+    buildDir = "dist",
     injectInHTML = true,
   } = options;
 
@@ -24,32 +26,32 @@ export default function TailwindLegacyPlugin(options = {}) {
     name: "vite:tailwind-legacy",
 
     async closeBundle() {
-      console.log("⚙️ [Tailwind Legacy] Pós-build iniciado...");
+      console.log("⚙️ [Tailwind Legacy] Post-build started...");
 
       if (!fs.existsSync(tailwindConfig)) {
-        console.error(`❌ Arquivo ${tailwindConfig} não encontrado`);
+        console.error(`❌ File ${tailwindConfig} not found`);
         return;
       }
 
       if (!fs.existsSync(assetsDir)) {
         fs.mkdirSync(assetsDir, { recursive: true });
-        console.log(`✅ Pasta ${assetsDir} criada`);
+        console.log(`✅ Directory ${assetsDir} created`);
       }
 
       fs.writeFileSync(
         inputCSS,
         "@tailwind base;\n@tailwind components;\n@tailwind utilities;"
       );
-      console.log("✅ input.css criado");
+      console.log(`✅ ${inputCSS} created`);
 
       try {
         execSync(
           `npx tailwindcss@3.4.1 -c ${tailwindConfig} -i ${inputCSS} -o ${path.join(assetsDir, "output.css")} --minify`,
           { stdio: "inherit" }
         );
-        console.log("✅ CSS legado gerado");
+        console.log("✅ Legacy CSS generated");
       } catch (err) {
-        console.error("❌ Erro ao gerar CSS legado", err.message);
+        console.error("❌ Error generating legacy CSS", err.message);
         return;
       }
 
@@ -89,12 +91,18 @@ export default function TailwindLegacyPlugin(options = {}) {
 
       const browserCheckPath = path.join(assetsDir, "browser-check.js");
       fs.writeFileSync(browserCheckPath, browserCheckScript);
-      console.log("✅ browser-check.js criado");
+      console.log("✅ browser-check.js created");
       if (injectInHTML) {
-        injectScript(path.join(process.cwd(), "dist"), publicPath);
-        console.log("✅ browser-check.js injetado nos HTMLs");
+        const buildOutputDir = path.join(process.cwd(), buildDir);
+        if (fs.existsSync(buildOutputDir)) {
+          injectScript(buildOutputDir, publicPath);
+          console.log("✅ browser-check.js injected into HTML files");
+        } else {
+          console.warn(`⚠️ Build directory ${buildOutputDir} not found. Skipping HTML injection.`);
+          console.warn("ℹ️ Make sure the buildDir option points to your build output directory.");
+        }
       } else {
-        console.log("ℹ️ Injeção nos HTMLs desativada (injectInHTML: false)");
+        console.log("ℹ️ HTML injection disabled (injectInHTML: false)");
       }
     },
   };
@@ -116,7 +124,7 @@ function injectScript(dir, publicPath) {
           `<script src="${publicPath}browser-check.js"></script>\n</body>`
         );
         fs.writeFileSync(fullPath, content, "utf8");
-        console.log(`📄 Script injetado em: ${fullPath}`);
+        console.log(`📄 Script injected into: ${fullPath}`);
       }
     }
   }
