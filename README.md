@@ -1,55 +1,54 @@
 # vite-plugin-tailwind-legacy
 
-⚡ Plugin Vite que gera CSS do Tailwind v4 com compatibilidade para navegadores antigos como fallback, usando Tailwind CSS v3.
+⚡ Vite plugin that generates Tailwind v4 CSS with legacy browser compatibility fallback using Tailwind CSS v3.
 
-### ✨ Por que usar?
-Problema:
+*Read this in other languages: [Português](README-pt.md)*
 
-❌ Tailwind v4 usa recursos CSS modernos como `oklch()` que quebram em navegadores antigos
+### ✨ Why use it?
+Problem:
 
-❌ Polyfills convencionais não resolvem completamente o problema
+❌ Tailwind v4 uses modern CSS features like `oklch()` that break in older browsers
 
-❌ Manter duas versões do CSS manualmente é trabalhoso
+❌ Conventional polyfills don't completely solve the problem
 
-Solução:
+❌ Maintaining two CSS versions manually is cumbersome
 
-✅ Gera automaticamente um fallback em Tailwind v3 para navegadores legados
+Solution:
 
-✅ ZERO impacto no Tailwind v4 para navegadores
+✅ Automatically generates a Tailwind v3 fallback for legacy browsers
 
-✅ Apenas dispositivos legados que receberam um novo css
+✅ ZERO impact on Tailwind v4 for modern browsers
 
-### 🎬 para ver as demonstrações veja as imagens lá em baixo 👇
+✅ Only legacy devices receive the fallback CSS
 
-O objetivo do plugin é manter a experiência consistente em navegadores legados sem comprometer  vantagens do Tailwind v4 (para navegadores modernos). Com um desenvolvimento atento às duas realidades, seu site terá aparência e funcionalidade muito próximas em qualquer navegador - moderno ou antigo - enquanto você continua aproveitando todos os recursos avançados da v4 em seu fluxo de trabalho.
+### 🎬 See the demos in the images below 👇
 
-# ✨ Funcionalidades
+The plugin's goal is to maintain a consistent experience on legacy browsers without compromising Tailwind v4's advantages (for modern browsers). With careful development for both realities, your site will have very similar appearance and functionality in any browser - modern or old - while you continue leveraging all the advanced v4 features in your workflow.
 
-Este plugin executa uma etapa extra após o build para:
+# ✨ Features
 
-- Gerar um CSS legado com `tailwindcss@3` compatível com navegadores antigos
+This plugin executes an extra step after the build to:
 
-- Injetar dinamicamente o CSS legado em navegadores que não suportam Tailwind v4 (como Chrome < 111) pormeio de um script `browser-check.js` nos HTMLs da build
+- Generate legacy CSS with `tailwindcss@3` compatible with older browsers
 
+- Dynamically inject the legacy CSS in browsers that don't support Tailwind v4 (like Chrome < 111) through a `browser-check.js` script in the build HTML files
 
-## 🚀 Instalação
+## 🚀 Installation
 
 ```bash
 npm install --save-dev vite-plugin-tailwind-legacy
-# ou
+# or
 yarn add vite-plugin-tailwind-legacy --dev
 ```
 
-## ⚙️ Configuração
+## ⚙️ Configuration
 
-- Adicione o plugin  `vite-plugin-tailwind-legacy` nas configs do vite.
+- Add the `vite-plugin-tailwind-legacy` plugin to your Vite config.
 
 ```javascript
 import { defineConfig } from 'vite'
 import tailwindcss from '@tailwindcss/vite'
 import TailwindLegacyPlugin from 'vite-plugin-tailwind-legacy'; 
-
-
 
 export default defineConfig(({ command }) => {
   const isBuild = command === 'build';
@@ -67,36 +66,35 @@ export default defineConfig(({ command }) => {
       ],      
 }
 })
-````
-
-
-## 🛠 Informaçãos relevantes
-
-
-⚠️ **Atenção especial** - Antes de seguir atente-se a essas duas informações importantes:
-
-1 - O campo `content` - ele deve apontar para a build final do vite:
-
-```javascript
-content: ["./dist/**/*.{html,js}"],  // 👈 Verifique se este path corresponde aos seus arquivos buildados pelo vite
 ```
 
-2 - Cores
+## 🛠 Important Information
 
-O Tailwind v4 utiliza `oklch()` como formato padrão de cores, que não funcionam em navegadores mais antigos. Para garantir o funcionamento:
+⚠️ **Special Attention** - Before proceeding, pay attention to these two important pieces of information:
 
-- Use cores hexadecimais (`#RRGGBB`) em seu tema
-- Converta valores `oklch` (https://oklch.com)
+1 - The `content` field - it should point to your Vite's final build:
 
-Exemplo básico:
+```javascript
+content: ["./dist/**/*.{html,js}"],  // 👈 Verify this path matches your files built by Vite
+```
+
+2 - Colors
+
+Tailwind v4 uses `oklch()` as the default color format, which doesn't work in older browsers. To ensure functionality:
+
+- Use hexadecimal colors (`#RRGGBB`) in your theme
+- Convert `oklch` values (https://oklch.com)
+
+Basic example:
 ```javascript
 colors: {
-  primary: '#1445e2',       // Formato compatível
-  secondary: '#4f46e5'      // Formato compatível
+  primary: '#1445e2',       // Compatible format
+  secondary: '#4f46e5'      // Compatible format
 }
-````
-## ⚙️ Configuração do Tailwind (Versão Legacy)
-📁 Crie um arquivo `tailwind.config.legacy.js` no mesmo diretorio do `vite.config.ts` com esta estrutura base (Altere as cores pro seu tema):
+```
+
+## ⚙️ Tailwind Configuration (Legacy Version)
+📁 Create a `tailwind.config.legacy.js` file in the same directory as your `vite.config.ts` with this base structure (Change colors to match your theme):
 ```javascript
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -138,16 +136,7 @@ module.exports = {
           content: '#333333',
         },
         
-        chart: {
-          1: '#c96d3f',
-          2: '#47c1a9',
-          3: '#4297e7',
-          4: '#8a64d1',
-          5: '#df5d8f',
-        },
-
-        
-       neutral: '#6b6b8d',
+        neutral: '#6b6b8d',
         "neutral-content": '#fefeff',
         info: '#5bbef0',
         "info-content": '#f6faff',
@@ -166,9 +155,7 @@ module.exports = {
         "sidebar-accent-foreground": '#252525',
         "sidebar-border": '#e8e8e8',
         "sidebar-ring": '#737373',
-        
       },
-
 
       borderRadius: {
         sm: 'calc(0.625rem - 4px)',
@@ -176,7 +163,6 @@ module.exports = {
         lg: '0.625rem',
         xl: 'calc(0.625rem + 4px)',
       },
-
 
       height: {
            ...Array.from({ length: 1000 }, (_, i) => i + 1).reduce((acc, val) => {
@@ -217,7 +203,7 @@ module.exports = {
     },
   },
   plugins: [
-    require('tailwindcss-animate'), // Se você não usa você deve remover
+    require('tailwindcss-animate'), // Remove this if you don't use it
     function({ addBase }) {
           addBase({
             'button': {
@@ -234,132 +220,156 @@ module.exports = {
 };
 ```
 
-## 📝 Como Usar
-1- Instale o plugin como mostrado acima
+## 📝 How to Use
+1. Install the plugin as shown above
+2. Configure your Vite config according to the example
+3. Create the Tailwind configuration file
+4. Run your Vite build normally [it might ask for authorization to install tailwind-v3 [this shouldn't interfere with your project as it won't install in your project's `package.json`]]
 
-2 - Configure o Vite config conforme o exemplo
+## 🛠 Specific Configurations
 
-3 - Crie o arquivo de configuração do Tailwind
-
-4 - Execute seu build do vite normalmente [pode ser que peça atorização para instalar o tailwind-v3 [ela não deve inteferir com o projeto pois não vai instalar no `package.json` do seu projeto)]
-
-__________________________________________________________
-
-__________________________________________________________
-
-## 🛠 Configurações específicas
-
-Configs padrão:
+Default configs:
 ```javascript
 TailwindLegacyPlugin({
-  tailwindConfig: 'tailwind.config.legacy.js', // Trocar o diretorio do tailwindConfig
-  assetsDir: 'dist/assets', // Trocar o diretorio de saída dos arquivos gerados
-  publicPath: '/static/assets/',  // Trocar o public path
-  injectInHTML: true,   // Ativa inserção do script de verificação de navegador antigo
+  tailwindConfig: 'tailwind.config.legacy.js', // Change the tailwindConfig directory
+  inputCSS: 'input.css', // Change the input CSS filename
+  assetsDir: 'dist/assets', // Change the output directory for generated files
+  publicPath: '/static/assets/',  // Change the public path
+  buildDir: 'dist', // Change the build output directory to scan for HTML files
+  injectInHTML: true,   // Enable insertion of legacy browser check script
 })
 ```
+
 #### 📂 tailwindConfig
 
-Padrão: `'tailwind.config.legacy.js'`
+Default: `'tailwind.config.legacy.js'`
 
-O que faz: Especifica o caminho para o arquivo de configuração do Tailwind v3
+What it does: Specifies the path to the Tailwind v3 configuration file
 
-Quando alterar: Se você quiser usar um nome diferente para o arquivo de configuração ou diretorio
+When to change: If you want to use a different name for the configuration file or directory
 
-Exemplo:
+Example:
 ```javascript
 tailwindConfig: './config/tailwind-legacy-config.js'
 ```
 
+#### 📄 inputCSS
+
+Default: `'input.css'`
+
+What it does: Specifies the temporary input CSS file name that will be created during the build process
+
+When to change: If you need to avoid conflicts with existing files in your project
+
+Example:
+```javascript
+inputCSS: 'legacy-input.css'
+```
+
 #### 📁 assetsDir
 
-Padrão: 'dist/assets'
+Default: `'dist/assets'`
 
-O que faz: Define onde os arquivos CSS e JS gerados serão salvos
-Quando alterar: Se sua build usa uma estrutura de diretórios diferente
+What it does: Defines where the generated CSS and JS files will be saved
 
-Exemplo:
+When to change: If your build uses a different directory structure
+
+Example:
 ```javascript
 assetsDir: 'build/static'
-````
+```
 
 #### 🌐 publicPath
 
-Padrão: '/static/assets/'
+Default: `'/static/assets/'`
 
-O que faz: Controla o caminho público usado para carregar os assets no HTML
+What it does: Controls the public path used to load assets in the HTML
 
-Quando alterar: Quando os assets são servidos de um path diferente
+When to change: When assets are served from a different path
 
-Exemplo:
+Example:
 ```javascript
 publicPath: '/static/'
 ```
 
+#### 📂 buildDir
+
+Default: `'dist'`
+
+What it does: Specifies the build output directory where HTML files are located for script injection
+
+When to change: When using different frameworks (e.g., Nuxt uses `.output/public`, Next.js uses `out`, etc.)
+
+Example:
+```javascript
+buildDir: '.output/public'  // For Nuxt
+// or
+buildDir: 'out'  // For Next.js static export
+```
 
 #### ✨ injectInHTML
 
-Padrão: true
-O que faz: Automaticamente injeta o script de verificação de navegador legado
+Default: `true`
 
-Quando desativar (false): Em SSG (como Next.js, Gatsby), pode usar o backend Django, por exemplo, para verificar o navegador do cliente antes de servir o html evitando que inicie desconfigurado, pode ja injetar o `output.css` gerado pelo plugin.
-Para implementações server-side (Django, Rails, etc), consulte:  
+What it does: Automatically injects the legacy browser check script
+
+When to disable (false): For SSG (like Next.js, Gatsby), you can use the backend (Django, for example) to check the client's browser before serving the HTML, avoiding misconfiguration, and you can already inject the `output.css` generated by the plugin.
+
+For server-side implementations (Django, Rails, etc), see:  
 
 [BACKEND-INTEGRATION.md](./BACKEND-INTEGRATION.md)  
-*(Inclui exemplos de detecção de navegador e fallback controlado)*
+*(Includes examples of browser detection and controlled fallback)*
 
-## 🔄 Compatibilidade com Navegadores
+## 🔄 Browser Compatibility
 
-🚨 Limitações em Navegadores Legados
-**O recurso `gap` do Flexbox/Grid não tem suporte completo em:**
-- Chrome < 84 (lançado em 2020)
-- Firefox < 80 (lançado em 2020)
-- Safari < 14.1 (lançado em 2021)
-- Edge < 84 (lançado em 2020)
+🚨 Legacy Browser Limitations
 
-Você pode contornar isso usando outras classes css no seu projeto ja pensando que quer compatibilidade pra navegadores muito antigos.
+**The Flexbox/Grid `gap` feature doesn't have full support in:**
+- Chrome < 84 (released in 2020)
+- Firefox < 80 (released in 2020)
+- Safari < 14.1 (released in 2021)
+- Edge < 84 (released in 2020)
 
+You can work around this by using other CSS classes in your project, keeping in mind compatibility with very old browsers.
 
-## ❓Como funciona?
+## ❓ How does it work?
 
-1 - O `@vite-plugin-tailwind-legacy` cria um arquivo css baseado na v3 para navegadores antigos
+1. The `@vite-plugin-tailwind-legacy` creates a v3-based CSS file for legacy browsers
 
-2 - Adiciona um script aos html que verifica se é um navegador antigo, se for ele usa como fallback `output.css` para navegadores antigos.
+2. It adds a script to HTML files that checks if it's a legacy browser, and if so, uses `output.css` as a fallback for legacy browsers.
 
-### 🔄 Fluxo `@vite-plugin-tailwind-legacy`
+### 🔄 `@vite-plugin-tailwind-legacy` Flow
 
 ```mermaid
 graph TD
-    A[Navegador Acessa a Página] --> B[Carrega Tailwind v4 Padrão]
-    B --> C{É Browser Legacy?}
-    C -->|Navegador Moderno| D[Não faz nada]
-    C -->|Navegador Legado| E[Remover Tailwind v4 Dinamicamente]
-    E --> F[Injetar CSS da Tailwind v3]
+    A[Browser Accesses Page] --> B[Loads Default Tailwind v4]
+    B --> C{Is Legacy Browser?}
+    C -->|Modern Browser| D[Do Nothing]
+    C -->|Legacy Browser| E[Remove Tailwind v4 Dynamically]
+    E --> F[Inject Tailwind v3 CSS]
 
     style D fill:#005a1c,stroke:#166534
-  style F fill:#005a1c,stroke:#166534
+    style F fill:#005a1c,stroke:#166534
     style E fill:#c67000,stroke:#92400e
-````
+```
 
+# 🔍 Examples
 
-# 🔍 Exemplos
-
-### Antes e depois do plugin Chrome 85.0.4183.102 pelo celular (só gerei o output.css e apliquei no site delo Developer Tools)
+### Before and after the plugin on Chrome 85.0.4183.102 mobile (just generated output.css and applied it to the site via Developer Tools)
 
 Shadcn https://ui.shadcn.com/docs/components/avatar
 <div style="display: flex; flex-direction: column; gap: 16px;">
   <div style="display: flex; gap: 16px;">
-    <img style="width: 48%; object-fit: contain;" src="https://raw.githubusercontent.com/sapiyans/vite-plugin-tailwind-legacy/refs/heads/main/exemplo/images/shadcn_antes.png" alt="antes" />
-    <img style="width: 48%; object-fit: contain;" src="https://raw.githubusercontent.com/sapiyans/vite-plugin-tailwind-legacy/refs/heads/main/exemplo/images/shadcn_depois.png" alt="depois" />
+    <img style="width: 48%; object-fit: contain;" src="https://raw.githubusercontent.com/sapiyans/vite-plugin-tailwind-legacy/refs/heads/main/exemplo/images/shadcn_antes.png" alt="before" />
+    <img style="width: 48%; object-fit: contain;" src="https://raw.githubusercontent.com/sapiyans/vite-plugin-tailwind-legacy/refs/heads/main/exemplo/images/shadcn_depois.png" alt="after" />
   </div>
-  <img style="width: 100%;" alt="gif demonstrativo" src="https://raw.githubusercontent.com/sapiyans/vite-plugin-tailwind-legacy/refs/heads/main/exemplo/images/shadcn_gif.gif" />
+  <img style="width: 100%;" alt="demo gif" src="https://raw.githubusercontent.com/sapiyans/vite-plugin-tailwind-legacy/refs/heads/main/exemplo/images/shadcn_gif.gif" />
 </div>
 
-## Sites que estão em desenvolvimento com tailwind v4 =>
+## Sites in development with Tailwind v4 =>
 
-Antes e depois do plugin Chrome 85.0.4183.102 pelo celular
+Before and after the plugin on Chrome 85.0.4183.102 mobile
 <div style="display: flex; gap: 16px;">
-  <img style="width: 48%; object-fit: contain;" alt="antes" src="https://raw.githubusercontent.com/sapiyans/vite-plugin-tailwind-legacy/refs/heads/main/exemplo/images/clinica_antes.png" />
-  <img style="width: 48%; object-fit: contain;" alt="Depois" src="https://raw.githubusercontent.com/sapiyans/vite-plugin-tailwind-legacy/refs/heads/main/exemplo/images/clinica_depois.png" />
+  <img style="width: 48%; object-fit: contain;" alt="before" src="https://raw.githubusercontent.com/sapiyans/vite-plugin-tailwind-legacy/refs/heads/main/exemplo/images/clinica_antes.png" />
+  <img style="width: 48%; object-fit: contain;" alt="after" src="https://raw.githubusercontent.com/sapiyans/vite-plugin-tailwind-legacy/refs/heads/main/exemplo/images/clinica_depois.png" />
 </div>
-

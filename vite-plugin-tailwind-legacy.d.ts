@@ -6,6 +6,7 @@ declare module 'vite-plugin-tailwind-legacy' {
     inputCSS?: string,
     assetsDir?: string;
     publicPath?: string;
+    buildDir?: string;
     injectInHTML?: boolean;
   }
 
