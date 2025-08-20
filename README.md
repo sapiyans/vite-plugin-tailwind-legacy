@@ -334,18 +334,18 @@ You can work around this by using other CSS classes in your project, keeping in 
 
 ## ❓ How does it work?
 
-1. The `@vite-plugin-tailwind-legacy` creates a v3-based CSS file for legacy browsers
+1. The `vite-plugin-tailwind-legacy` creates a v3-based CSS file for legacy browsers
 
 2. It adds a script to HTML files that checks if it's a legacy browser, and if so, uses `output.css` as a fallback for legacy browsers.
 
-### 🔄 `@vite-plugin-tailwind-legacy` Flow
+### 🔄 `vite-plugin-tailwind-legacy` Flow
 
 ```mermaid
 graph TD
     A[Browser Accesses Page] --> B[Loads Default Tailwind v4]
     B --> C{Is Legacy Browser?}
-    C -->|Modern Browser| D[Do Nothing]
-    C -->|Legacy Browser| E[Remove Tailwind v4 Dynamically]
+    C -->|NO - Modern Browser| D[Do Nothing]
+    C -->|YES - Legacy Browser| E[Remove Tailwind v4 Dynamically]
     E --> F[Inject Tailwind v3 CSS]
 
     style D fill:#005a1c,stroke:#166534

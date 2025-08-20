@@ -351,18 +351,18 @@ Você pode contornar isso usando outras classes css no seu projeto ja pensando q
 
 ## ❓Como funciona?
 
-1 - O `@vite-plugin-tailwind-legacy` cria um arquivo css baseado na v3 para navegadores antigos
+1 - O `vite-plugin-tailwind-legacy` cria um arquivo css baseado na v3 para navegadores antigos
 
 2 - Adiciona um script aos html que verifica se é um navegador antigo, se for ele usa como fallback `output.css` para navegadores antigos.
 
-### 🔄 Fluxo `@vite-plugin-tailwind-legacy`
+### 🔄 Fluxo `vite-plugin-tailwind-legacy`
 
 ```mermaid
 graph TD
     A[Navegador Acessa a Página] --> B[Carrega Tailwind v4 Padrão]
     B --> C{É Browser Legacy?}
-    C -->|Navegador Moderno| D[Não faz nada]
-    C -->|Navegador Legado| E[Remover Tailwind v4 Dinamicamente]
+    C -->|NÃO - Navegador Moderno| D[Não faz nada]
+    C -->|SIM - Navegador Legado| E[Remover Tailwind v4 Dinamicamente]
     E --> F[Injetar CSS da Tailwind v3]
 
     style D fill:#005a1c,stroke:#166534
