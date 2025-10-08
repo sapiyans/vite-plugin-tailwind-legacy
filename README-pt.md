@@ -258,6 +258,9 @@ TailwindLegacyPlugin({
   publicPath: '/static/assets/',  // Trocar o public path
   buildDir: 'dist', // Trocar o diretório de saída da build para escanear arquivos HTML
   injectInHTML: true,   // Ativa inserção do script de verificação de navegador antigo
+  injectInHTML: true,   // Ativa inserção do script de verificação de navegador antigo
+  deleteStyles: ['app', 'layout'],  // Seleciona qual stylesheet sera deletado, se vazio deleta todos
+  outputCSSName: 'tailwind-v3-legacy.css', // Altera o nome do arquivo css gerado, deve terminar com .css
 })
 ```
 #### 📂 tailwindConfig
@@ -296,6 +299,8 @@ Quando alterar: Se você precisar evitar conflitos com arquivos existentes no se
 Exemplo:
 ```javascript
 inputCSS: 'legacy-input.css'
+// ou
+inputCSS: 'src/test/legacy-input.css'
 ```
 
 #### 🌐 publicPath
@@ -307,8 +312,11 @@ O que faz: Controla o caminho público usado para carregar os assets no HTML
 Quando alterar: Quando os assets são servidos de um path diferente
 
 Exemplo:
+Example:
 ```javascript
-publicPath: '/static/'
+publicPath: '/static/' // caminho relativo
+// or
+publicPath: 'https://cdn.exemplo.com.br/assets/' // url completa
 ```
 
 #### 📂 buildDir
@@ -328,7 +336,8 @@ buildDir: 'out'  // Para Next.js export estático
 
 #### ✨ injectInHTML
 
-Padrão: true
+Padrão: `true`
+
 O que faz: Automaticamente injeta o script de verificação de navegador legado
 
 Quando desativar (false): Em SSG (como Next.js, Gatsby), pode usar o backend Django, por exemplo, para verificar o navegador do cliente antes de servir o html evitando que inicie desconfigurado, pode ja injetar o `output.css` gerado pelo plugin.
@@ -336,6 +345,37 @@ Para implementações server-side (Django, Rails, etc), consulte:
 
 [BACKEND-INTEGRATION.md](./BACKEND-INTEGRATION.md)  
 *(Inclui exemplos de detecção de navegador e fallback controlado)*
+
+
+#### 🎯 deleteStyles
+
+Padrão: `[]` (array vazio)
+
+O que faz: Define quais arquivos CSS serão removidos em navegadores legados. Se vazio, remove TODOS os estilos. Se preenchido, remove apenas os especificados.
+
+Quando usar: Quando você quer preservar alguns estilos (ex: CSS de componentes, estilos críticos) e só substituir o Tailwind.
+
+Exemplo: 
+```javascript
+deleteStyles: ['app', 'layout'] //remove app.css, app-abc123.css, layout.css, layout-min.css, etc.
+// ou 
+deleteStyles: ['app.css', 'layout.css'] //remove app.css, layout.css, etc.
+```
+
+#### 📄 outputCSSName
+
+Padrão: `'tailwind-v3-legacy.css'`
+
+O que faz: Define o nome do arquivo CSS gerado pelo Tailwind v3 para navegadores legados.
+
+Quando alterar: Para personalizar o nome do arquivo de fallback ou evitar conflitos.
+
+Exemplo:
+```javascript
+outputCSSName: 'legacy-styles.css' // gera legacy-styles.css em vez do padrão.
+```
+
+
 
 ## 🔄 Compatibilidade com Navegadores
 
@@ -377,9 +417,9 @@ graph TD
 
 Shadcn https://ui.shadcn.com/docs/components/avatar
 <div style="display: flex; flex-direction: column; gap: 16px;">
-  <div style="display: flex; gap: 16px;">
-    <img style="width: 48%; object-fit: contain;" src="https://raw.githubusercontent.com/sapiyans/vite-plugin-tailwind-legacy/refs/heads/main/exemplo/images/shadcn_antes.png" alt="antes" />
-    <img style="width: 48%; object-fit: contain;" src="https://raw.githubusercontent.com/sapiyans/vite-plugin-tailwind-legacy/refs/heads/main/exemplo/images/shadcn_depois.png" alt="depois" />
+  <div style="display: flex; gap: 10px;">
+    <img style="width: 44%; object-fit: contain;" src="https://raw.githubusercontent.com/sapiyans/vite-plugin-tailwind-legacy/refs/heads/main/exemplo/images/shadcn_antes.png" alt="antes" />
+    <img style="width: 44%; object-fit: contain;" src="https://raw.githubusercontent.com/sapiyans/vite-plugin-tailwind-legacy/refs/heads/main/exemplo/images/shadcn_depois.png" alt="depois" />
   </div>
   <img style="width: 100%;" alt="gif demonstrativo" src="https://raw.githubusercontent.com/sapiyans/vite-plugin-tailwind-legacy/refs/heads/main/exemplo/images/shadcn_gif.gif" />
 </div>
@@ -387,7 +427,15 @@ Shadcn https://ui.shadcn.com/docs/components/avatar
 ## Sites que estão em desenvolvimento com tailwind v4 =>
 
 Antes e depois do plugin Chrome 85.0.4183.102 pelo celular
-<div style="display: flex; gap: 16px;">
-  <img style="width: 48%; object-fit: contain;" alt="antes" src="https://raw.githubusercontent.com/sapiyans/vite-plugin-tailwind-legacy/refs/heads/main/exemplo/images/clinica_antes.png" />
-  <img style="width: 48%; object-fit: contain;" alt="Depois" src="https://raw.githubusercontent.com/sapiyans/vite-plugin-tailwind-legacy/refs/heads/main/exemplo/images/clinica_depois.png" />
+<div style="display: flex; gap: 10px;">
+  <img style="width: 44%; object-fit: contain;" alt="antes" src="https://raw.githubusercontent.com/sapiyans/vite-plugin-tailwind-legacy/refs/heads/main/exemplo/images/clinica_antes.png" />
+  <img style="width: 44%; object-fit: contain;" alt="Depois" src="https://raw.githubusercontent.com/sapiyans/vite-plugin-tailwind-legacy/refs/heads/main/exemplo/images/clinica_depois.png" />
 </div>
+
+## 📊 Performance
+
+**Impacto zero** em navegadores modernos (nenhum CSS extra carregado)
+
+**Impacto mínimo** em navegadores legados (apenas uma requisição HTTP adicional)
+
+CSS gerado é automaticamente minificado

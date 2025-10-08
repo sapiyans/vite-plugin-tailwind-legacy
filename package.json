@@ -4,9 +4,6 @@
   "main": "vite-plugin-tailwind-legacy.js",
   "types": "./vite-plugin-tailwind-legacy.d.ts",
   "type": "module",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "keywords": [
     "vite",
     "plugin",

@@ -9,7 +9,9 @@ import { execSync } from "child_process";
  *  assetsDir?: string;
  *  publicPath?: string; // for use in HTML (e.g.: "/static/assets/")
  *  buildDir?: string; // build output directory to scan for HTML files
- *  injectInHTML = boolean;
+ *  injectInHTML?: boolean;
+ *  deleteStyles?: string[]; 
+ *  outputCSSName?: string;
  * }} options
  */
 export default function TailwindLegacyPlugin(options = {}) {
@@ -20,10 +22,12 @@ export default function TailwindLegacyPlugin(options = {}) {
     publicPath = "/static/assets/",
     buildDir = "dist",
     injectInHTML = true,
+    deleteStyles = [],
+    outputCSSName = "tailwind-v3-legacy.css"
   } = options;
 
   return {
-    name: "vite:tailwind-legacy",
+    name: "vite:vite-plugin-tailwind-legacy",
 
     async closeBundle() {
       console.log("⚙️ [Tailwind Legacy] Post-build started...");
@@ -32,6 +36,12 @@ export default function TailwindLegacyPlugin(options = {}) {
         console.error(`❌ File ${tailwindConfig} not found`);
         return;
       }
+      const inputCSSDir = path.dirname(inputCSS);
+      if (!fs.existsSync(inputCSSDir)) {
+        fs.mkdirSync(inputCSSDir, { recursive: true });
+        console.log(`✅ Directory ${inputCSSDir} created`);
+      }
+
 
       if (!fs.existsSync(assetsDir)) {
         fs.mkdirSync(assetsDir, { recursive: true });
@@ -46,7 +56,7 @@ export default function TailwindLegacyPlugin(options = {}) {
 
       try {
         execSync(
-          `npx tailwindcss@3.4.1 -c ${tailwindConfig} -i ${inputCSS} -o ${path.join(assetsDir, "output.css")} --minify`,
+          `npx tailwindcss@3.4.1 -c ${tailwindConfig} -i ${inputCSS} -o ${path.join(assetsDir, outputCSSName)} --minify`,
           { stdio: "inherit" }
         );
         console.log("✅ Legacy CSS generated");
@@ -59,6 +69,8 @@ export default function TailwindLegacyPlugin(options = {}) {
         const MIN_CHROME = 111;
         const MIN_SAFARI = 16.4;
         const MIN_FIREFOX = 128;
+        const STYLES_TO_DELETE = ${JSON.stringify(deleteStyles)};
+        let legacyCSSLoaded = false; 
 
         function isLegacyBrowser() {
           const ua = navigator.userAgent;
@@ -75,15 +87,35 @@ export default function TailwindLegacyPlugin(options = {}) {
           return false;
         }
 
-        function checkBrowser() {
-          if (isLegacyBrowser()) {
-            document.querySelectorAll('link[rel="stylesheet"], style').forEach(el => el.remove());
-            const link = document.createElement('link');
-            link.rel = 'stylesheet';
-            link.href = '${publicPath}output.css';
-            document.head.appendChild(link);
+         function checkBrowser() {
+          if (legacyCSSLoaded) return; 
+            if (isLegacyBrowser()) {
+            legacyCSSLoaded = true;
+                if (STYLES_TO_DELETE.length > 0) {
+                  document.querySelectorAll('link[rel="stylesheet"]').forEach(link => {
+                    const href = link.getAttribute('href') || '';
+                    const fileName = href.split('/').pop().split('?')[0];
+                    
+                    const shouldDelete = STYLES_TO_DELETE.some(styleName => 
+                      fileName === styleName || 
+                      fileName.startsWith(styleName + '.') ||
+                      fileName.startsWith(styleName + '-')
+                    );
+                    if (shouldDelete) {
+                      link.remove();
+                    }
+                  });
+              } else {
+                  document.querySelectorAll('link[rel="stylesheet"], style').forEach(el => el.remove());
+              }
+              
+              const link = document.createElement('link');
+              link.rel = 'stylesheet';
+              link.href = '${publicPath}${outputCSSName}';
+              document.head.appendChild(link);
+            }
           }
-        }
+
 
         checkBrowser();
         document.addEventListener('DOMContentLoaded', checkBrowser);

@@ -8,6 +8,8 @@ declare module 'vite-plugin-tailwind-legacy' {
     publicPath?: string;
     buildDir?: string;
     injectInHTML?: boolean;
+    deleteStyles?: string[]; 
+    outputCSSName?: string;
   }
 
   const TailwindLegacyPlugin: (options?: TailwindLegacyOptions) => Plugin;
