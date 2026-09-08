@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-tailwind-legacy",
-  "version": "1.1.0",
+  "version": "2.1.0",
   "main": "vite-plugin-tailwind-legacy.js",
   "types": "./vite-plugin-tailwind-legacy.d.ts",
   "type": "module",
@@ -10,17 +10,22 @@
     "tailwindcss",
     "tailwindv4",
     "legacy",
-    "compatibility"
+    "compatibility",
+    "postcss",
+    "fallback",
+    "browser-support"
   ],
   "files": [
     "vite-plugin-tailwind-legacy.js",
-    "vite-plugin-tailwind-legacy.d.ts"
+    "vite-plugin-tailwind-legacy.d.ts",
+    "README-pt.md",
+    "README.md"
   ],
   "author": {
     "name": "sapiyans",
     "url": "https://sapiensin.com"
   },
-  "description": "Plugin Vite para gerar CSS Tailwind v4 compatível com navegadores antigos, utilizando tailwind v3",
+  "description": "Plugin Vite para gerar CSS Tailwind v4 compatível com navegadores antigos, utilizando PostCSS e gerando arquivo como fallback",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -36,7 +41,23 @@
       "import": "./vite-plugin-tailwind-legacy.js"
     }
   },
+  "peerDependencies": {
+    "vite": "^4.0.0 || ^5.0.0 || ^6.0.0"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.4.20",
+    "culori": "^3.3.0",
+    "postcss": "^8.4.47",
+    "postcss-media-minmax": "^5.0.0",
+    "postcss-nesting": "^12.0.0",
+    "postcss-preset-env": "^9.6.0"
+  },
   "devDependencies": {
-    "vite-plugin-tailwind-legacy": "^1.0.3"
+    "vite": "^5.4.8"
+  },
+  "scripts": {
+    "build": "echo 'No build step required'",
+    "test": "echo 'No tests configured'",
+    "prepublishOnly": "npm run build"
   }
 }
