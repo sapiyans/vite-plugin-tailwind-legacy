@@ -902,10 +902,9 @@ export default function TailwindLegacyPlugin(options = {}) {
     apply: "build",
     enforce: "post",
 
-    async closeBundle() {
+   async closeBundle() {
       const root = process.cwd();
 
-      // Trava do Vike SSG para rodar na 2ª etapa quando os HTMLs estiverem prontos
       const absoluteBuildDirCheck = path.resolve(root, buildDir);
       const htmlFilesCheck = [];
       findFiles(absoluteBuildDirCheck, (file) => {
@@ -922,9 +921,12 @@ export default function TailwindLegacyPlugin(options = {}) {
       console.info('[tailwind-legacy] 🚀 Processing CSS...');
 
       const possibleDirs = [path.resolve(root, buildDir), path.resolve(root, "dist/client"), path.resolve(root, "dist")];
+      
 
       let absoluteBuildDir = null;
       let absoluteAssetsDir = null;
+
+
 
       for (const dir of possibleDirs) {
         if (fs.existsSync(dir)) {
@@ -943,6 +945,10 @@ export default function TailwindLegacyPlugin(options = {}) {
       if (!absoluteAssetsDir) {
         absoluteAssetsDir = path.join(absoluteBuildDir, "assets");
         if (!fs.existsSync(absoluteAssetsDir)) fs.mkdirSync(absoluteAssetsDir, { recursive: true });
+      }
+      if (!fs.existsSync(absoluteAssetsDir)) {
+        fs.mkdirSync(absoluteAssetsDir, { recursive: true });
+        console.info(`[tailwind-legacy] 📁 Created directory: ${absoluteAssetsDir}`);
       }
 
       const cssFiles = [];
