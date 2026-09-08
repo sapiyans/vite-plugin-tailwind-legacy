@@ -168,10 +168,6 @@ graph TD
 - **Minimal impact** on legacy browsers (just one additional HTTP request)
 - Generated CSS is minified for production
 
-## 🤝 Contributing
-
-Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md).
-
 ---
 
 ## 📌 Old Version (v1)
