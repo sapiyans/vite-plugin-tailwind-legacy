@@ -176,7 +176,7 @@ Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md)
 
 ## 📌 Old Version (v1)
 
-If you need the version that used Tailwind CSS v3 separately, check the [v1 documentation](./v1/README.v1.md).
+If you need the version that used Tailwind CSS v3 separately, check the [v1 documentation](./v1/README.md).
 
 v1 used a different approach: it generated a separate CSS with Tailwind v3 for legacy browsers. v2 is faster and more efficient, transforming Tailwind v4 CSS directly with PostCSS.
 

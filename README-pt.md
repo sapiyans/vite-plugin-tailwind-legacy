@@ -176,7 +176,7 @@ Contribuições são bem-vindas! Leia nosso [Guia de Contribuição](CONTRIBUTIN
 
 ## 📌 Versão Antiga (v1)
 
-Se você precisa da versão que usava Tailwind CSS v3 separadamente, consulte a [documentação da v1](./v1/README-pt.v1.md).
+Se você precisa da versão que usava Tailwind CSS v3 separadamente, consulte a [documentação da v1](./v1/README-pt.md).
 
 A v1 utilizava uma abordagem diferente: gerava um CSS separado com Tailwind v3 para navegadores legados. A v2 é mais rápida e eficiente, transformando o CSS do Tailwind v4 diretamente com PostCSS.
 
