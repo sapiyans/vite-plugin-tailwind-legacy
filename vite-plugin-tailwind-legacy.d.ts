@@ -1,4 +1,4 @@
-declare module "vite-plugin-tailwind-legacy2" {
+declare module "vite-plugin-tailwind-legacy" {
   import { Plugin } from "vite";
 
   export interface TailwindLegacyOptions {
