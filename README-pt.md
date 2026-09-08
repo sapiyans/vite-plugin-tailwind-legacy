@@ -155,7 +155,7 @@ graph TD
     B --> C{É Browser Legacy?}
     C -->|NÃO - Navegador Moderno| D[Não faz nada]
     C -->|SIM - Navegador Legado| E[Remover Tailwind v4 Dinamicamente]
-    E --> F[Injetar CSS da Tailwind v3]
+    E --> F[Injetar CSS Legado]
 
     style D fill:#005a1c,stroke:#166534
     style F fill:#005a1c,stroke:#166534
