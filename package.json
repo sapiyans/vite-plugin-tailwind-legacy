@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-tailwind-legacy",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "main": "vite-plugin-tailwind-legacy.js",
   "types": "./vite-plugin-tailwind-legacy.d.ts",
   "type": "module",
